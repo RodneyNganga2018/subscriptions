@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.css')}}">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="navbar navbar-light bg-light px-5 mb-5">
+        <h1>{{magazine_tp[0]['title']}}</h1>
+        <div class="ms-auto">
+            <a href="http://127.0.0.1:5000/magazines">Dashboard</a>
+            <a href="http://127.0.0.1:5000/magazines/new" class="ms-5">Add Magazine</a>
+            <a href="http://127.0.0.1:5000/users/{{session['user_id']}}" class="ms-5">Account</a>
+            <a href="http://127.0.0.1:5000/logout" role="button" class="btn btn-outline-dark ms-5">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        {% for user in users_tp %}{% if user['id']==magazine_tp[0]['author_id'] %}
+            <p>Added by {{user['first_name']}} {{user['last_name']}}</p>
+        {% endif %}{% endfor %}
+
+        <p>Description:</p>
+        <p style="width: 500px; height: 250px;" class="overflow-auto ms-5">{{magazine_tp[0]['content']}}</p>
+
+        <p>Subscribers:</p>
+        <ul>
+        {% for subscriber in subscribers_tp %}
+            {% for user in users_tp %}
+                {% if user['id']==subscriber['user_id'] %}
+                    <li>{{user['first_name']}} {{user['last_name']}}</li>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

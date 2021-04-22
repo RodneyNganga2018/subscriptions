@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.css')}}">
+    <title>Use Account</title>
+</head>
+<body>
+    <div class="navbar navbar-light bg-light px-5 mb-5">
+        <div class="ms-auto">
+            <a href="http://127.0.0.1:5000/magazines/new">Add Magazine</a>
+            <a href="http://127.0.0.1:5000/magazines" class="ms-5">Dashboard</a>
+            <a href="http://127.0.0.1:5000/logout" role="button" class="btn btn-outline-dark ms-5">Logout</a>
+        </div>
+    </div>
+    <div class="container d-flex justify-content-evenly">
+        <div class="col-6">
+            <h1 class="mb-3">Update User</h1>
+            <form action="/users/{{user_tp[0]['id']}}/update" method="POST">
+                <div class="input-group mb-3 overflow-auto">
+                    <div class="col-2">
+                        <label for="f_name" class="form-label">First Name:</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="text" name="f_name" id="f_name" class="form-control" value="{{user_tp[0]['first_name']}}">
+                        <span style="color: red;">
+                        {% with errors = get_flashed_messages(category_filter=["vp_first"]) %}
+                            {% if errors %}
+                                {%- for msg in errors %}{{ msg }}{% endfor -%}
+                            {% endif %}
+                        {% endwith %}
+                        </span>
+                    </div>
+                </div>
+                <div class="input-group mb-3 overflow-auto">
+                    <div class="col-2">
+                        <label for="l_name" class="form-label"> Name:</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="text" name="l_name" id="l_name" class="form-control" value="{{user_tp[0]['last_name']}}">
+                        <span style="color: red;">
+                        {% with errors = get_flashed_messages(category_filter=["vp_last"]) %}
+                            {% if errors %}
+                                {%- for msg in errors %}{{ msg }}{% endfor -%}
+                            {% endif %}
+                        {% endwith %}
+                        </span>
+                    </div>
+                </div>
+                <div class="input-group mb-3 overflow-auto">
+                    <div class="col-2">
+                        <label for="email" class="form-label">Email:</label>
+                    </div>
+                    <div class="col-5">
+                        <input type="text" name="email" id="email" class="form-control" value="{{user_tp[0]['email']}}">
+                        <span style="color: red;">
+                        {% with errors = get_flashed_messages(category_filter=["vp_email"]) %}
+                            {% if errors %}
+                                {%- for msg in errors %}{{ msg }}{% endfor -%}
+                            {% endif %}
+                        {% endwith %}
+                        {% with errors = get_flashed_messages(category_filter=["t_email"]) %}
+                            {% if errors %}
+                                {%- for msg in errors %}{{ msg }}{% endfor -%}
+                            {% endif %}
+                        {% endwith %}
+                        </span> 
+                        <input type="submit" class="btn btn-outline-primary btn-sm mt-3">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-6">
+            <h1>User Magazines</h1>
+            <ul>
+                {% for magazine in magazines_tp %}
+                    {% for count in count_tp %} {% if count['magazine_id']==magazine['id'] %}
+                    <li>{{magazine['title']}} <a href="http://127.0.0.1:5000/users/{{user_tp[0]['id']}}/delete/{{magazine['id']}}">delete</a><br><span class="ms-4">Number of Subscribers: {{count['subscribers']}}</span></li>
+                    {% endif %} {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

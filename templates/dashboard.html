@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.css')}}">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="navbar navbar-light bg-light px-5 mb-5">
+        <h1>Welcome John Doe!</h1>
+        <div class="ms-auto">
+            <a href="http://127.0.0.1:5000/magazines/new">Add Magazine</a>
+            <a href="http://127.0.0.1:5000/users/{{session['user_id']}}" class="ms-5">Account</a>
+            <a href="http://127.0.0.1:5000/logout" role="button" class="btn btn-outline-dark ms-5">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <h5>Magazines</h5>
+        <div style="height: 500px; width: 500px;" class="border border-3 rounded border-warning overflow-auto p-3">
+            {% for magazine in mags %}
+                {% for user in users_tp %}{% if magazine['author_id']==user['id'] %}
+                    <p><a href="http://127.0.0.1:5000/magazines/{{magazine['id']}}">{{magazine['title']}}</a> added by {{user['first_name']}} {{user['last_name']}} <a href="http://127.0.0.1:5000/magazines/subscribe/{{session['user_id']}}/{{magazine['id']}}">Subscribe</a></p>
+                {% endif %}{% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/bootstrap.css')}}">
+    <title>Add Magazine</title>
+</head>
+<body>
+    <div class="navbar navbar-light bg-light px-5 mb-5">
+        <div class="ms-auto">
+            <a href="http://127.0.0.1:5000/magazines" class="ms-5">Dashboard</a>
+            <a href="http://127.0.0.1:5000/logout" role="button" class="btn btn-outline-dark ms-5">Logout</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Add a magazine</h1>
+        <form action="/magazines/create" method="POST" class="pt-5">
+            <div class="mb-3 input-group">
+                <div class="col-1">
+                    <label for="title" class="form-label">Title:</label>
+                </div>
+                <div class="col-6">
+                    <input type="text" name="title" id="title" class="form-control">
+                    <span>  <!--This is the title for the magazine-->
+                        {% with errors = get_flashed_messages(category_filter=["vm_title"]) %}
+                            {% if errors %}
+                                {%- for msg in errors %}{{ msg }}{% endfor -%}
+                            {% endif %}
+                        {% endwith %}
+                    <br>
+                        {% with errors = get_flashed_messages(category_filter=["vm_description"]) %}
+                            {% if errors %}
+                                {%- for msg in errors %}{{ msg }}{% endfor -%}
+                            {% endif %}
+                        {% endwith %}
+                    </span>
+                </div>
+            </div>
+            <div class='mb-3 input-group'>
+                <div class="col-1">
+                    <label for="description" class="form-label">Description:</label>
+                </div>
+                <div class="col-6">
+                    <textarea name="description" id="description" cols="30" rows="15" class="form-control"></textarea>
+                    <input type="submit" class="btn btn-outline-primary mt-3">
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
